@@ -1,9 +1,14 @@
 FROM oichuppa/base
 MAINTAINER chuppa
 
-RUN mkdir /app && mkdir /config && mkdir /plexdata && mkdir /logs && mkdir /etc/cron.d
+RUN mkdir /plexdata && mkdir /logs && mkdir /etc/cron.d
 
-RUN apk add --no-cache python git bash dcron && git clone https://github.com/ngovil21/Plex-Cleaner.git /app && apk del git && rm -rf /var/cache/apk/*
+RUN apt update
+RUN apt upgrade -y
+RUN apt install -y --no-install-recommends --no-install-suggests python git bash cron
+RUN git clone https://github.com/ngovil21/Plex-Cleaner.git /app
+RUN apt remove git -y
+RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # Add the scripts 
 COPY run-entry.sh /app/run-entry.sh
