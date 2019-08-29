@@ -11,26 +11,23 @@ if [ ! -f /config/Cleaner.conf ]; then
 fi
 
 # If the CRON expression has been erased, we execute the script only once
-if [ -z "$EXECUTION_CRON_EXPRESSION" ] || [ "$EXECUTION_CRON_EXPRESSION" == "ONCE" ]; then
-    echo "Executing the script once..." | tee -a /logs/plexcleaner.log
-    echo /app/run-plexcleaner.sh "$@" | tee -a /logs/plexcleaner.log
-    /app/run-plexcleaner.sh "$@" | tee -a /logs/plexcleaner.log
-    exit 0;
+echo "Executing the script at boot..." | tee -a /logs/plexcleaner.log
+echo /app/run-plexcleaner.sh "$@" | tee -a /logs/plexcleaner.log
+/app/run-plexcleaner.sh "$@" | tee -a /logs/plexcleaner.log
 
-else
-    # Create the crontab configuration file 
-    echo "Registering CRON expression $EXECUTION_CRON_EXPRESSION /app/run-plexcleaner.sh ""$@"" ..." >> /logs/plexcleaner.log
-    cat > crontab.tmp << EOF
+
+# Create the crontab configuration file 
+echo "Registering CRON expression $EXECUTION_CRON_EXPRESSION /app/run-plexcleaner.sh ""$@"" ..." >> /logs/plexcleaner.log
+cat > crontab.tmp << EOF
 $EXECUTION_CRON_EXPRESSION /app/run-plexcleaner.sh $@ | tee -a /logs/plexcleaner.log
-@reboot /app/run-plexcleaner.sh $@ | tee -a /logs/plexcleaner.log
 # An empty line is required at the end of this file for a valid cron file.
 EOF
-    crontab "crontab.tmp" 
-    rm -f "crontab.tmp" 
+crontab "crontab.tmp" 
+rm -f "crontab.tmp" 
 
-    # Run CRON in background
-    /usr/sbin/crond -L /logs/cron.log
+# Run CRON in background
+/usr/sbin/crond -L /logs/cron.log
 
-    # Tail the logs 
-    tail -n 5000 -f /logs/plexcleaner.log
-fi
+# Tail the logs 
+tail -n 5000 -f /logs/plexcleaner.log
+
