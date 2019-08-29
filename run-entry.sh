@@ -22,6 +22,7 @@ else
     echo "Registering CRON expression $EXECUTION_CRON_EXPRESSION /app/run-plexcleaner.sh ""$@"" ..." >> /logs/plexcleaner.log
     cat > crontab.tmp << EOF
 $EXECUTION_CRON_EXPRESSION /app/run-plexcleaner.sh $@ | tee -a /logs/plexcleaner.log
+@reboot /app/run-plexcleaner.sh $@ | tee -a /logs/plexcleaner.log
 # An empty line is required at the end of this file for a valid cron file.
 EOF
     crontab "crontab.tmp" 
