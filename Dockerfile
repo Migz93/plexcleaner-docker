@@ -1,4 +1,4 @@
-FROM FROM chuppa/base:latest
+FROM FROM oichuppa/base:latest
 MAINTAINER chuppa
 
 RUN mkdir /app && mkdir /config && mkdir /plexdata && mkdir /logs && mkdir /etc/cron.d
