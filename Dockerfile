@@ -16,7 +16,7 @@ COPY run-plexcleaner.sh /app/run-plexcleaner.sh
 RUN chmod +x /app/run-entry.sh && chmod +x /app/run-plexcleaner.sh
 
 # Default interval to 5min
-ENV EXECUTION_CRON_EXPRESSION */5 * * * *
+ENV EXECUTION_CRON_EXPRESSION 0 */6 * * *
 
 # REQUIRED
 # Store the configuration out of the container
