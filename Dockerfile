@@ -5,7 +5,7 @@ RUN mkdir /plexdata && mkdir /logs && mkdir /etc/cron.d
 
 RUN apt update
 RUN apt upgrade -y
-RUN apt install -y --no-install-recommends --no-install-suggests python git bash cron
+RUN apt install -y --no-install-recommends --no-install-suggests python3 git bash cron
 RUN git clone https://github.com/ngovil21/Plex-Cleaner.git /app
 RUN apt remove git -y
 RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
