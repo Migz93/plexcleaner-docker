@@ -1,3 +1,5 @@
+Check https://github.com/jorenn92/Maintainerr for an alternative.
+
 # plexcleaner-docker
 [![Docker Image CI](https://github.com/Migz93/plexcleaner-docker/actions/workflows/main.yml/badge.svg)](https://github.com/Migz93/plexcleaner-docker/actions/workflows/main.yml)  
 Updated to use python3 as the original docker container was breaking on some special characters.
